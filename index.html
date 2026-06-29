@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>One More Dip</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="stylecoffee.css">
+  </head>
+  <body>
+    <nav id="navbar">
+  <a href="#home" class="nav-logo">One More Sip</a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Review</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-order">Order Now</a></li>
+  </ul>
+
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- MOBILE right side: Order Now + Hamburger -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#contact" class="nav-order mob-order">Order Now</a>
+    <button class="mob-hamburger" id="mobHamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+ 
+  <!-- Mobile fullscreen dropdown -->
+  <ul class="mob-dropdown" id="mobDropdown">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Review</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="home" style="min-height:100vh; display:block;">
+  <div class="hero-bg" id="heroBg"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. 2024 &nbsp;·&nbsp; Handcrafted with love</p>
+    <h1 class="hero-title">One More Sip</h1>
+    <p class="hero-tagline">Just one more won't hurt.</p>
+
+    <div class="hero-cta-group">
+      <a href="#menu" class="btn-primary">Explore the Menu</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <img src="img/Gemini_Generated_Image_xrki8vxrki8vxrki.png" alt="">
+
+  <div class="scroll-hint" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F5ECD7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+
+  </section>
+
+<!-- placeholder sections so nav links actually scroll somewhere -->
+<section id="menu" style="all:unset;display:block;">
+
+<div id="menu-section">
+  <h2 class="menu-heading">Our Menu</h2>
+  
+  <p class="menu-sub">Click a card to explore</p>
+
+  <!-- PREVIEW: 3 polaroid cards -->
+  <div class="menu-preview" id="menu-preview">
+    <div class="preview-card" onclick="openMenu('coffee')">
+      <div class="polaroid">
+        <img class="pol-img" src="img/Coffee Moment.jpg" alt="">
+        <div class="polaroid-label">
+          <span class="polaroid-name">Coffee</span>
+          <span class="polaroid-desc">handcrafted espresso drinks</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-card" onclick="openMenu('cookies')">
+      <div class="polaroid">
+        <img class="pol-img" src="img/Cookies.jpg" alt="">
+        <div class="polaroid-label">
+          <span class="polaroid-name">Cookies</span>
+          <span class="polaroid-desc">fresh baked daily</span>
+        </div>
+      </div>
+    </div>
+    <div class="preview-card" onclick="openMenu('noncoffee')">
+      <div class="polaroid">
+        <img class="pol-img" src="img/non coffee.jpg" alt="">
+        <div class="polaroid-label">
+          <span class="polaroid-name">Non-Coffee</span>
+          <span class="polaroid-desc">teas, matcha & more</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPEN AREA: tabs + carousel (hidden until card clicked) -->
+  <div class="menu-open-area" id="menu-open-area">
+    <div class="menu-tabs">
+      <button class="menu-tab" id="tab-coffee"    onclick="switchTab('coffee')">☕ Coffee</button>
+      <button class="menu-tab" id="tab-cookies"   onclick="switchTab('cookies')">🍪 Cookies</button>
+      <button class="menu-tab" id="tab-noncoffee" onclick="switchTab('noncoffee')">🍵 Non-Coffee</button>
+    </div>
+    <div class="carousel-track-wrapper">
+      <button class="carousel-btn prev" onclick="slide(-1)">&#8249;</button>
+      <div class="carousel-track" id="carousel-track"></div>
+      <button class="carousel-btn next" onclick="slide(1)">&#8250;</button>
+    </div>
+    <div class="carousel-dots" id="carousel-dots"></div>
+  </div>
+
+</div>
+
+
+<script>
+
+  
+const menuData2 = {
+  coffee: [
+    {name:"Latte",      price:"$5.50",ingredients:"Espresso, Steamed Milk, Milk Foam",     desc:"Smooth and creamy, a café classic.",img: "Latte.jpg"},
+    {name:"Americano",  price:"$5.50",ingredients:"Espresso, Hot Water",                   desc:"Bold and pure — espresso at heart.", img:"Americano.jpg"     },
+    {name:"Mocha",      price:"$4.50",ingredients:"Espresso, Chocolate, Steamed Milk",     desc:"Coffee meets chocolate in perfect harmony.",    img:"mocha.jpg"},
+    {name:"Estes",      price:"$5.30",ingredients:"Espresso, Oat Milk, Caramel",           desc:"Our signature — once you start, you can't stop.", img:"Espresso.jpg"},
+    {name:"Cappuccino", price:"$5.00",ingredients:"Espresso, Steamed Milk, Dense Foam",    desc:"Velvety foam, rich espresso, pure joy.",        img:"Cappuccino.jpg"},
+  ],
+  cookies: [
+    {name:"Choc Chip",     price:"$3.50",ingredients:"Butter, Dark Chocolate Chips, Vanilla",desc:"Crispy outside, gooey inside.",     img:"Choc\ Chip.jpg"},
+    {name:"Oat Cookie",    price:"$2.50",ingredients:"Oats, Honey, Raisins, Cinnamon",       desc:"Wholesome and warmly spiced.",      img:"Oat\ Cookies.jpg"},
+    {name:"Brownie Cookie",price:"$3.30",ingredients:"Dark Cocoa, Butter, Walnuts",          desc:"Fudgy, dense, dangerously good.",   img:"Brownie\ Cookies.jpg"},
+    {name:"Salted Caramel",price:"$3.80",ingredients:"Caramel, Sea Salt, Brown Butter",      desc:"Sweet meets salty in every bite.",  img:"Salted\ Caramel.jpg"},
+    {name:"Snickerdoodle", price:"$3.00",ingredients:"Cinnamon Sugar, Cream of Tartar",      desc:"Soft, pillowy, warmly spiced.",     img:"Snickerdoodles.jpg"},
+  ],
+  noncoffee: [
+    {name:"Matcha Latte",   price:"$5.75",ingredients:"Ceremonial Matcha, Oat Milk, Honey",  desc:"A vibrant green energy boost.",   img:"Matcha\ Latte.jpg"},
+    {name:"Chai Latte",     price:"$5.75",ingredients:"Masala Chai, Steamed Milk, Cardamom", desc:"Warming spices in every sip.",    img:"Chai\ \ Latte.jpg"},
+    {name:"Hot Chocolate",  price:"$5.00",ingredients:"Dark Cocoa, Steamed Milk, Cream",     desc:"Rich, velvety, pure comfort.",    img:"hot\ chochlate.jpg"},
+    {name:"Hibiscus Cooler",price:"$4.50",ingredients:"Hibiscus, Lemon, Mint, Soda",         desc:"Refreshing floral fizz.",         img:"hibiscus\ cooler.jpg"},
+    {name:"Turmeric Latte", price:"$5.25",ingredients:"Turmeric, Ginger, Oat Milk, Honey",   desc:"Golden goodness in a cup.",       img:"Turmeric\ Latte.jpg"},
+  ]
+};
+
+let mActiveCat = 'coffee';
+let mCurrent   = 0;
+
+function openMenu(cat) {
+  // hide preview
+  document.getElementById('menu-preview').style.display = 'none';
+  // show open area
+  document.getElementById('menu-open-area').classList.add('visible');
+  mActiveCat = cat;
+  mCurrent   = 0;
+  // set active tab
+  ['coffee','cookies','noncoffee'].forEach(c => {
+    document.getElementById('tab-'+c).classList.toggle('active', c===cat);
+  });
+  renderMenu();
+  setTimeout(()=> document.getElementById('menu-open-area').scrollIntoView({behavior:'smooth',block:'nearest'}), 80);
+}
+
+function switchTab(cat) {
+  mActiveCat = cat;
+  mCurrent   = 0;
+  ['coffee','cookies','noncoffee'].forEach(c => {
+    document.getElementById('tab-'+c).classList.toggle('active', c===cat);
+  });
+  renderMenu();
+}
+
+function slide(dir) {
+  const n = menuData2[mActiveCat].length;
+  mCurrent = (mCurrent + dir + n) % n;
+  const track = document.getElementById('carousel-track');
+  track.style.opacity   = '0.3';
+  track.style.transform = `translateX(${dir * -40}px)`;
+  setTimeout(() => {
+    renderMenu();
+    const t = document.getElementById('carousel-track');
+    t.style.transition = 'none';
+    t.style.opacity    = '1';
+    t.style.transform  = 'translateX(0)';
+  }, 140);
+}
+
+function goTo2(idx) { mCurrent = idx; renderMenu(); }
+
+function renderMenu() {
+  const items = menuData2[mActiveCat];
+  const n     = items.length;
+  const prev  = (mCurrent - 1 + n) % n;
+  const next  = (mCurrent + 1) % n;
+  const track = document.getElementById('carousel-track');
+  track.style.transition = 'opacity 0.3s, transform 0.3s';
+  track.innerHTML = [
+    makeMenuCard(items[prev],'side'),
+    makeMenuCard(items[mCurrent],'center'),
+    makeMenuCard(items[next],'side'),
+  ].join('');
+  const dots = document.getElementById('carousel-dots');
+  dots.innerHTML = items.map((_,i) =>
+    `<div class="dot ${i===mCurrent?'active':''}" onclick="goTo2(${i})"></div>`
+  ).join('');
+}
+
+function makeMenuCard(item, pos) {
+  const hideInfo = pos==='side' ? 'display:none;' : '';
+  const sideName = pos==='side' ? `<div class="card-name-side">${item.name}</div>` : '';
+  const imageClass = item.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+  // Create an Add to Cart button for the center card
+  const actionButton = pos === 'center' ? 
+    `<button class="add-to-cart-btn" onclick="addToCart('${item.name}', '${item.price}')">Add to List</button>` : '';
+  return `<div class="menu-card ${pos}">
+    <div class="card-inner">
+      <div class="card-img-wrap menu-img-${imageClass}">
+  
+</div>
+      <div class="card-info" style="${hideInfo}">
+        <div class="card-name">${item.name}</div>
+        <div class="card-price">${item.price}</div>
+        <div class="card-ingredients">${item.ingredients}</div>
+        <div class="card-desc">${item.desc}</div>
+        ${actionButton}
+      </div>
+    </div>${sideName}</div>`;
+    
+}
+// touch swipe
+let mTouchX = 0;
+document.addEventListener('touchstart', e => {
+  if (e.target.closest('#carousel-track')) mTouchX = e.touches[0].clientX;
+},{passive:true});
+document.addEventListener('touchend', e => {
+  if (e.target.closest('#carousel-track')) {
+    const diff = mTouchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) slide(diff > 0 ? 1 : -1);
+  }
+  
+},{passive:true});
+</script>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<section id="about" style="all:unset;display:block">
+
+<div id="about-section">
+  <!-- LEFT: Photo -->
+   <div class="about-container">  <div class="about-image"></div> <div class="about-text-block"> ...
+    </div>
+  <div class="about-img-wrap">
+    <!-- Replace src with your café photo later -->
+    <img src="img/The Lexy finalists!.jpg" alt="">
+  </div>
+  <!-- RIGHT: Text -->
+  <div class="about-text">
+    <p class="about-eyebrow">Our Story</p>
+    <h2 class="about-title">
+      More than coffee —<br>
+      it's a <span>feeling</span>
+    </h2>
+    <div class="about-divider"></div>
+    <p class="about-body">
+      One More Sip started with a simple idea — every cup of coffee deserves
+      to be an experience. Nestled in a cozy corner, we handcraft every drink
+      with love, the finest beans, and a whole lot of warmth. Whether you
+      come in for a quick espresso or settle in for hours, this is your space.
+    </p>
+    <div class="about-message">
+      "We don't just serve coffee. We serve moments worth remembering."
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Menu Items</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Handcrafted</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+<section id="gallery" style="all:unset;display:block;">
+<div id="gallery-section">
+  <h2 class="gallery-heading">Our Vibe</h2>
+  <p class="gallery-sub">Hover to pause &nbsp;·&nbsp; A peek inside</p>
+
+  <div class="gallery-strip">
+    <div class="gallery-track" id="galleryTrack">
+      <!-- FIRST SET — replace placeholders with your real images -->
+      <!-- <img src="img/gallery1.jpg" alt="Latte art"/> -->
+      <div class="gallery-item">
+        <img src="img/most ordered.jpg" alt="mornig latte">
+        <div class="gallery-overlay"><span>Morning Latte</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/making.jpg" alt="">
+        <div class="gallery-overlay"><span>Fresh Baked</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/Smart Coffee Bar.jpg" alt="">
+        <div class="gallery-overlay"><span>Cozy Corner</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/service.jpg" alt="">
+        <div class="gallery-overlay"><span>The Green One</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/golden hr.jpg" alt="">
+        <div class="gallery-overlay"><span>Golden Hour</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/Rich Dark Roast.jpg" alt="">
+        <div class="gallery-overlay"><span>Dark Roast</span></div>
+      </div>
+      <!-- DUPLICATE SET for seamless loop -->
+      <div class="gallery-item">
+        <img src="img/most ordered.jpg" alt="mornig latte">
+        <div class="gallery-overlay"><span>Morning Latte</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/making.jpg" alt="">
+        <div class="gallery-overlay"><span>Fresh Baked</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/Smart Coffee Bar.jpg" alt="">
+        <div class="gallery-overlay"><span>Cozy Corner</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="img/service.jpg" alt="">
+        <div class="gallery-overlay"><span>The Green One</span></div>
+      </div>
+      <div class="gallery-item">
+         <img src="img/golden hr.jpg" alt="">
+        <div class="gallery-overlay"><span>Golden Hour</span></div>
+      </div>
+      <div class="gallery-item">
+         <img src="img/Rich Dark Roast.jpg" alt="">
+        <div class="gallery-overlay"><span>Dark Roast</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="gallery-pause-hint">Hover to pause the gallery</p>
+</div>
+</section>
+<section id="reviews" style="all:unset;display:block;">
+<div id="reviews-section">
+  <h2 class="reviews-heading">What People Say</h2>
+  <p class="reviews-sub">Real words from real coffee lovers</p>
+
+  <div class="reviews-slider-wrap">
+    <button class="reviews-arrow prev" onclick="reviewSlide(-1)">&#8249;</button>
+    <div class="reviews-track" id="reviewsTrack">
+
+      <!-- PAGE 1 -->
+      <div class="reviews-page">
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">The latte here is hands down the best I've ever had. That first sip just hits different every single time.</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p8.jpg" alt="">
+            
+            <div>
+              <div class="review-name">Priya S.</div>
+              <div class="review-date">2 weeks ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">Cozy vibe, great music, even better cookies. I come here every Saturday morning without fail.</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p1.jpg" alt="">
+            <div>
+              <div class="review-name">Arjun M.</div>
+              <div class="review-date">1 month ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">One More Sip is my go-to study spot. The ambiance is perfect and the Estes coffee keeps me going all day!</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p2.jpg" alt="">
+            <div>
+              <div class="review-name">Neha K.</div>
+              <div class="review-date">3 weeks ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">The matcha latte is an absolute dream. I dragged all my friends here and now they're regulars too!</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p3.jpg" alt="">
+            <div>
+              <div class="review-name">Zara T.</div>
+              <div class="review-date">2 months ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 2 -->
+      <div class="reviews-page">
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">The salted caramel cookie with an Americano is a combo I never knew I needed. Absolute perfection.</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p4.jpg" alt="">
+            
+            <div>
+              <div class="review-name">Rahul D.</div>
+              <div class="review-date">1 week ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">Staff is so warm and welcoming. They remembered my order on my third visit. That's rare and special!</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p5.jpg" alt="">
+          
+            <div>
+              <div class="review-name">Ananya R.</div>
+              <div class="review-date">3 weeks ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">Never thought a brownie cookie could make me emotional. One More Dip changed that. Worth every rupee!</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p6.jpg" alt="">
+          
+            <div>
+              <div class="review-name">Karan V.</div>
+              <div class="review-date">1 month ago</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <span class="review-quote-mark">"</span>
+          <p class="review-text">The chai latte is my soul drink. Came for one visit, now I'm here thrice a week. No regrets whatsoever!</p>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-footer">
+            <img src="img/p7.jpg" alt="">
+           
+            <div>
+              <div class="review-name">Meera P.</div>
+              <div class="review-date">2 weeks ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="reviews-arrow next" onclick="reviewSlide(1)">&#8250;</button>
+  </div>
+
+  <div class="reviews-nav">
+    <button class="reviews-dot active" onclick="reviewGoTo(0)"></button>
+    <button class="reviews-dot" onclick="reviewGoTo(1)"></button>
+  </div>
+</div>
+
+
+
+<section id="location" style="all:unset;display:block;">
+<div id="location-section">
+  <div class="location-inner">
+    <div class="location-left">
+      <h2 class="location-heading">Find Us</h2>
+      <p class="location-sub">Come say hello</p>
+
+      <div class="location-block">
+        <div class="location-icon">📍</div>
+        <div>
+          <div class="location-label">Address</div>
+          <div class="location-value">123 Café Lane, Cozy Corner<br>Your City — 000000</div>
+        </div>
+      </div>
+
+      <div class="location-block">
+        <div class="location-icon">📞</div>
+        <div>
+          <div class="location-label">Phone</div>
+          <div class="location-value">+91 98765 43210</div>
+        </div>
+      </div>
+
+      <div class="location-block">
+        <div class="location-icon">📧</div>
+        <div>
+          <div class="location-label">Email</div>
+          <div class="location-value">hello@onemoredip.cafe</div>
+        </div>
+      </div>
+
+      <div class="location-block">
+        <div class="location-icon">📸</div>
+        <div>
+          <div class="location-label">Instagram</div>
+          <div class="location-value">@onemoredip.cafe</div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <div class="location-right">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--espresso);margin-bottom:24px;">Opening Hours</h3>
+      <table class="timings-table">
+        <tr class="timings-today"><td><strong>Monday-Friday</strong></td><td>7:00 AM – 9:00 PM</td></tr>
+        <tr class="timings-today"><td><strong>Saturday-Sunday</strong></td><td><strong>8:00 AM – 11:00 PM</strong></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="location-right">
+  <div class="contact-card">
+    <div class="contact-badge">Contact Us</div>
+    <h3 class="contact-form-heading">Get In Touch!</h3>
+    
+    <form class="embedded-contact-form">
+      <div class="form-group">
+        <label for="form-email">Email</label>
+        <input type="email" id="form-email" placeholder="Email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="form-name">Name</label>
+        <input type="text" id="form-name" placeholder="Name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="form-message">Message</label>
+        <textarea id="form-message" rows="4" placeholder="Message" required></textarea>
+      </div>
+
+      <button type="submit" class="form-submit-btn">Submit Button</button>
+    </form>
+  </div>
+</div>
+
+<footer id="contact" style="all:unset;display:block;">
+<div id="footer">
+  <div class="footer-top">
+
+    <!-- Brand -->
+    <div>
+      <div class="footer-logo">One More Dip</div>
+      <div class="footer-tagline">Just one more won't hurt.</div>
+      <div class="footer-social">
+        <a href="https://instagram.com/onemoredip.cafe" target="_blank" title="Instagram">📸</a>
+        <a href="mailto:hello@onemoredip.cafe" title="Email">✉️</a>
+        <a href="tel:+919876543210" title="Call Us">📞</a>
+      </div>
+      <a href="https://wa.me/919876543210" target="_blank" class="whatsapp-btn">
+        <span>💬</span> Order on WhatsApp
+      </a>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#location">Find Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>
+        📍 123 Café Lane, Cozy Corner<br>
+        Your City — 000000<br><br>
+        📞 +91 98765 43210<br>
+        ✉️ hello@onemoredip.cafe<br>
+        📸 @onemoredip.cafe
+      </p>
+    </div>
+
+    <!-- Hours -->
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <p>
+        Monday – Friday &nbsp; 7:00 AM – 9:00 PM<br>
+    
+        Saturday - Sunday &nbsp; 8:00 AM – 11:00 PM<br>
+        
+      </p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2024 One More Sip. All rights reserved. </p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</div>
+</footer>
+
+
+
+<!-- ═══════════════════ JS ═══════════════════ -->
+<script>
+  // navbar scroll shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // active link highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navAnchors.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.45 });
+
+  sections.forEach(s => observer.observe(s));
+
+
+  // hamburger toggle (desktop fallback)
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  }
+ 
+  // mobile hamburger toggle
+  const mobHamburger = document.getElementById('mobHamburger');
+  const mobDropdown  = document.getElementById('mobDropdown');
+  if (mobHamburger && mobDropdown) {
+    mobHamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobDropdown.classList.toggle('open');
+      mobHamburger.classList.toggle('open');
+    });
+    // close on link click
+    mobDropdown.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobDropdown.classList.remove('open');
+        mobHamburger.classList.remove('open');
+      });
+    });
+    // close on outside tap
+    document.addEventListener('click', (e) => {
+      if (!mobHamburger.contains(e.target) && !mobDropdown.contains(e.target)) {
+        mobDropdown.classList.remove('open');
+        mobHamburger.classList.remove('open');
+      }
+    });
+  }
+
+  // subtle hero zoom on load
+  window.addEventListener('load', () => {
+    document.getElementById('heroBg').classList.add('loaded');
+  });
+
+  let reviewCurrent = 0;
+const reviewTotal = 2;
+function reviewSlide(dir) {
+  reviewCurrent = (reviewCurrent + dir + reviewTotal) % reviewTotal;
+  updateReviews();
+}
+function reviewGoTo(idx) {
+  reviewCurrent = idx;
+  updateReviews();
+}
+function updateReviews() {
+  document.getElementById('reviewsTrack').style.transform = `translateX(-${reviewCurrent * 100}%)`;
+  document.querySelectorAll('.reviews-dot').forEach((d,i) => {
+    d.classList.toggle('active', i === reviewCurrent);
+  });
+}
+</script>
+<script src="order.js"></script>
+</body>
+</html>
